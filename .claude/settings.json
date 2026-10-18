@@ -1,0 +1,11 @@
+{
+  "model": "haiku",
+  "permissions": {
+    "allow": [
+      "Bash(python3 .claude/skills/seo-verify/check.py:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)"
+    ]
+  }
+}
