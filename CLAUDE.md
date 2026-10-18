@@ -23,3 +23,14 @@
 | `seo-verifier` | opus | Проверяет готовый diff на ошибки и регрессии | только чтение |
 
 Порядок: researcher/auditor (параллельно, если задачи независимы) → fixer → verifier. Каждому — только нужные ему данные, не вся история.
+
+## Какой навык брать (навыки с похожими описаниями)
+| Задача | Навык | Не брать одновременно |
+|---|---|---|
+| Стиль нового сайта | `design-taste-frontend` (v2) | `design-taste-frontend-v1`, `high-end-visual-design`, `minimalist-ui`, `frontend-design`: у них разные правила оформления. Другой стиль — только если клиент просит |
+| Улучшить готовый сайт | `redesign-existing-projects` | — |
+| Сгенерировать фото | `cf-image` (промпт из `ai-image-prompts-skill`) | `imagegen-*`, `brandkit` нужен встроенный генератор картинок |
+| Анимации | `gsap-*` (основа), `motion-framer` (React), `design-motion-principles` (проверка вкуса) | После анимаций — `web-vitals-auditor:lighthouse-audit` |
+| SEO в Google/Яндексе | `seo-audit:*` | `ai-seo:*` только для видимости в ответах ИИ |
+| Новая кампания в Директе | `yandex-direct-manager` | `direct` — для готового кабинета: аудит, отчёты, оптимизация |
+| Вопрос по правилам Директа | `yandex-direct` (справка) | — |
