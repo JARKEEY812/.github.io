@@ -89,7 +89,7 @@
   const cmpObs = once(grid => {
     const rows = grid.__lvRows || [];
     rows.forEach(r => r.classList.add('lv-in'));
-  }, { threshold: 0.2 });
+  }, { threshold: 0, rootMargin: '0px 0px -15% 0px' });
   function passCompare() {
     $$('section').forEach(sec => {
       if (sec.dataset.lvcmp) return;
