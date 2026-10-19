@@ -1,0 +1,93 @@
+/* ===== OneTen motion layer v5: additions on top of lv-css ===== */
+
+/* 1. Touch screens: card under the reading line gets focus, taps get feedback */
+.lv-tcard{transition:translate .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s ease}
+.lv-tcard.lv-touch-on{translate:0 -4px;box-shadow:0 0 0 1.5px rgba(var(--r-5b6ae0),.45),0 26px 50px -26px rgba(var(--r-3a46b8),.55)!important}
+@media (hover:none){
+  a,button,[data-card],[data-s]{transition:scale .18s ease}
+  a:active,button:active,[data-card]:active{scale:.97}
+}
+
+/* 2. Steps: number badge lights up as the reader reaches it, the line fills */
+.lv-num{transition:background-color .5s ease,color .5s ease,box-shadow .5s ease,scale .5s cubic-bezier(.2,.8,.2,1)}
+.lv-num.lv-num-on{background:var(--c-5b6ae0)!important;color:var(--c-ffffff)!important;box-shadow:0 0 0 7px rgba(var(--r-5b6ae0),.18)!important;scale:1.06}
+.lv-line-fill{position:absolute;left:0;top:0;width:100%;height:100%;background:linear-gradient(180deg,var(--c-5b6ae0),var(--c-72b8c8));transform-origin:50% 0;transform:scaleY(var(--lp,0));border-radius:inherit;pointer-events:none}
+
+/* 3. Comparison: rows come in pairs, cross then check */
+.lv-cmp-row{opacity:0;translate:var(--cx,-14px) 0;transition:opacity .6s ease var(--cd,0ms),translate .7s cubic-bezier(.2,.8,.2,1) var(--cd,0ms)}
+.lv-cmp-row.lv-in{opacity:1;translate:0 0}
+.lv-cmp-row>span:first-child{transition:scale .5s cubic-bezier(.3,1.6,.5,1) var(--cd,0ms);scale:.4}
+.lv-cmp-row.lv-in>span:first-child{scale:1}
+
+/* 6. Check marks draw one after another */
+.lv-chk path{stroke-dasharray:22;stroke-dashoffset:22;transition:stroke-dashoffset .55s cubic-bezier(.65,0,.35,1) calc(var(--kd,0ms) + 120ms)}
+.lv-chk.lv-in path{stroke-dashoffset:0}
+.lv-chk-b{transition:scale .45s cubic-bezier(.3,1.6,.5,1) var(--kd,0ms);scale:.55}
+.lv-chk-b.lv-in{scale:1}
+
+/* 4. Timeline: the year the reader is on is bright */
+.lv-year{transition:color .6s ease,opacity .6s ease,text-shadow .6s ease}
+.lv-year.lv-year-on{color:var(--c-a3b0fa)!important;opacity:1!important;text-shadow:0 0 40px rgba(var(--r-5b6ae0),.6)}
+
+/* 5. Niche icons: pop in, wiggle on hover */
+@keyframes lv-pop{0%{opacity:0;scale:.5}60%{opacity:1;scale:1.12}100%{opacity:1;scale:1}}
+@keyframes lv-wiggle{0%,100%{rotate:0deg}20%{rotate:-12deg}40%{rotate:10deg}60%{rotate:-6deg}80%{rotate:3deg}}
+.lv-nico{opacity:0}
+.lv-nico.lv-in{animation:lv-pop .7s cubic-bezier(.2,.8,.2,1) var(--nd,0ms) both}
+[data-tilt]:hover .lv-nico.lv-in,.lv-tcard.lv-touch-on .lv-nico.lv-in{animation:lv-wiggle .8s ease-in-out both}
+
+/* 8. FAQ: open card is outlined, answer slides in */
+@keyframes lv-fadeup{from{opacity:0;translate:0 10px}to{opacity:1;translate:0 0}}
+.lv-faq{transition:box-shadow .4s ease,background-color .4s ease}
+.lv-faq.lv-faq-open{box-shadow:inset 0 0 0 1.5px rgba(var(--r-5b6ae0),.55),0 24px 48px -28px rgba(var(--r-3a46b8),.5)!important}
+.lv-faq.lv-faq-open p{animation:lv-fadeup .5s .12s cubic-bezier(.2,.8,.2,1) both}
+
+/* 9. Case and article covers zoom on hover; horizontal lists drag with the mouse */
+.lv-cov{transition:scale .9s cubic-bezier(.2,.8,.2,1),translate .9s cubic-bezier(.2,.8,.2,1)}
+[data-card]:hover .lv-cov{scale:1.08;translate:0 -6px}
+[data-card]:hover image-slot{scale:1.04}
+[data-card] image-slot{transition:scale .9s cubic-bezier(.2,.8,.2,1)}
+.lv-drag{cursor:grab}
+.lv-drag.lv-dragging{cursor:grabbing;scroll-snap-type:none!important;user-select:none}
+.lv-drag.lv-dragging *{pointer-events:none}
+
+/* 10. Contacts: animated map until a real map or photo is set */
+.lv-map{position:absolute;inset:0;z-index:2;pointer-events:none;border-radius:inherit;overflow:hidden;background:var(--c-ececfb)}
+.lv-map svg{width:100%;height:100%;display:block}
+.lv-map .m-road{fill:none;stroke:var(--c-ffffff);stroke-width:10;stroke-linecap:round}
+.lv-map .m-road2{fill:none;stroke:var(--c-ffffff);stroke-width:5;stroke-linecap:round;opacity:.8}
+.lv-map .m-block{fill:var(--c-d8d8f4)}
+.lv-map .m-park{fill:var(--c-d7e9ef)}
+.lv-map .m-river{fill:none;stroke:var(--c-c6c8ef);stroke-width:22;stroke-linecap:round}
+.lv-map .m-pin{fill:var(--c-3a46b8)}
+.lv-map .m-dot{fill:var(--c-ffffff)}
+.lv-map .m-ring{fill:none;stroke:var(--c-5b6ae0);stroke-width:2.5;transform-box:fill-box;transform-origin:center;animation:lv-mring 2.6s ease-out infinite}
+.lv-map .m-drop{animation:lv-mdrop 1.1s cubic-bezier(.3,1.5,.5,1) .3s both}
+.lv-map .m-label{font:700 15px/1 Onest,sans-serif;fill:var(--c-061e70)}
+.lv-map .m-tag{fill:var(--c-ffffff);filter:drop-shadow(0 10px 18px rgba(var(--r-061e70),.18))}
+@keyframes lv-mring{0%{transform:scale(.3);opacity:.9}100%{transform:scale(2.4);opacity:0}}
+@keyframes lv-mdrop{0%{transform:translateY(-120px);opacity:0}100%{transform:none;opacity:1}}
+
+/* 11. Empty photo slots breathe until a photo is set */
+@keyframes lv-shimmer{to{background-position:-200% 0}}
+.lv-ph{background-image:linear-gradient(110deg,rgba(var(--r-ffffff),0) 30%,rgba(var(--r-ffffff),.38) 50%,rgba(var(--r-ffffff),0) 70%)!important;background-size:200% 100%!important;background-repeat:no-repeat!important;animation:lv-shimmer 3.4s linear infinite}
+
+/* SEO text block */
+[data-lv-seo] a{color:var(--c-3a46b8);text-decoration:underline;text-decoration-color:rgba(var(--r-5b6ae0),.4);text-underline-offset:4px;transition:text-decoration-color .3s}
+[data-lv-seo] a:hover{text-decoration-color:var(--c-3a46b8)}
+
+/* Home "Подход": the whole block fits one screen; phones scroll it as a normal block */
+@media (max-width:900px),(max-height:620px){
+  [data-approach-pin]{height:auto!important}
+  [data-approach-stick]{position:relative!important;height:auto!important;padding:clamp(72px,12vw,110px) 0 clamp(44px,8vw,64px)}
+  [data-approach-pin] [data-sw],[data-approach-pin] [data-pin-tail]{opacity:1!important;transform:none!important}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .lv-cmp-row,.lv-cmp-row>span:first-child,.lv-chk-b{opacity:1!important;translate:none!important;scale:1!important;transition:none!important}
+  .lv-chk path{stroke-dashoffset:0!important;transition:none!important}
+  .lv-nico{opacity:1!important;animation:none!important}
+  .lv-ph,.lv-map *,.lv-faq p{animation:none!important}
+  .lv-tcard.lv-touch-on,.lv-num.lv-num-on{translate:none;scale:1}
+  .lv-cov,[data-card] image-slot{transition:none!important}
+}
